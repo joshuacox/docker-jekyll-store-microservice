@@ -22,4 +22,4 @@ chown -R sinatra. /home/sinatra
 chown -R sinatra. /srv/www
 time sync
 
-sudo -u sinatra /bin/bash -c "/srv/www/run.sh"
+sudo -E -u sinatra /bin/bash -c "/home/sinatra/run.sh"

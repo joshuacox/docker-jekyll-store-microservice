@@ -1,6 +1,5 @@
 # sinatra 
-FROM debian:jessie
-
+FROM my-jessie:latest
 MAINTAINER Josh Cox <josh@webhosting.coop>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -40,25 +39,23 @@ RUN ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; rvm use --defa
 
 USER root
 WORKDIR /srv/www
-#ADD www/. /srv/www/
-#ADD www/.* /srv/www/
-#RUN rm -Rf app
 RUN git clone  https://github.com/joshuacox/microservice.git app
-RUN cd app; git remote add ssh  git@github.com/joshuacox/microservice.git
+WORKDIR /srv/www/app
+RUN git remote add ssh  git@github.com/joshuacox/microservice.git
 RUN sudo chown -R sinatra. /srv/www 
 USER sinatra
 
 RUN ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; bundle install"]
 #RUN ["/bin/bash", "-c",  "npm owner ls bufferutil"]
 #RUN ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; npm install"]
-# RUN ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; npm install coffeelint"]
+#RUN ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; npm install coffeelint"]
 #RUN ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; bower install"]
 
 # Expose the ports
-EXPOSE 3000 3001
+EXPOSE 4567
 
-ADD start.sh /srv/www/
-ADD run.sh /srv/www/
+ADD start.sh /home/sinatra/
+ADD run.sh /home/sinatra/
 # RUN cd app; git pull
 USER root
-CMD ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; ./start.sh"]
+CMD ["/bin/bash", "-c",  "source /home/sinatra/.rvm/scripts/rvm ; /home/sinatra/start.sh"]

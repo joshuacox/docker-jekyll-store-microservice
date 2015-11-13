@@ -1,9 +1,8 @@
 #!/bin/bash
-source /home/yeoman/.rvm/scripts/rvm
+source /home/sinatra/.rvm/scripts/rvm
 
 cd /srv/www/app
 git pull
-cd /srv/www
 
 # echo "debug hang"
 # sleep 600
@@ -11,4 +10,7 @@ cd /srv/www
 echo -n "whoami? "
 whoami
 
-grunt serve
+echo envtest
+printenv |grep JSM
+echo envtest
+ruby app.rb -o 0.0.0.0
